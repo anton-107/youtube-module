@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf dist/ && tsc",
+    "test": "jest",
     "test:dev": "jest -c jest.config.dev.js",
     "test:coverage": "jest  -c jest.config.js --coverage",
     "check-format": "prettier --check .",
