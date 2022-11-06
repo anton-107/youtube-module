@@ -11,5 +11,9 @@ module.exports = {
     },
   },
   collectCoverageFrom: ["src/**/*"],
-  coveragePathIgnorePatterns: ["src/oauth-client.ts", "src/youtube-client.ts"]
+  coveragePathIgnorePatterns: [
+    "src/oauth-client.ts",
+    "src/youtube-client.ts",
+    "src/youtube-parser.ts",
+  ],
 };

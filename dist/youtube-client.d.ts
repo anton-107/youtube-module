@@ -1,9 +1,9 @@
 /// <reference types="node" />
 /// <reference types="node" />
 /// <reference types="node" />
+import { OAuth2Client } from "google-auth-library/build/src/auth/oauth2client";
 import { IncomingMessage } from "http";
 import { RequestOptions } from "https";
-import { OAuth2Client } from "google-auth-library/build/src/auth/oauth2client";
 export declare type GetRequestCallback = (res: IncomingMessage) => void;
 declare type GetRequest = (options: RequestOptions, callback: GetRequestCallback) => void;
 interface YoutubeClientProperties {

@@ -1,7 +1,7 @@
-import { IncomingMessage } from "http";
-import { RequestOptions } from "https";
 import { youtube } from "@googleapis/youtube";
 import { OAuth2Client } from "google-auth-library/build/src/auth/oauth2client";
+import { IncomingMessage } from "http";
+import { RequestOptions } from "https";
 
 export type GetRequestCallback = (res: IncomingMessage) => void;
 type GetRequest = (

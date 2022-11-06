@@ -2,6 +2,13 @@
 
 Module that can be used to fetch data from YouTube, using YouTube Data API
 
+## Downloading captions using ytdl-core
+
+YoutubeParser class is a wrapper around ytdl-core library, that does two things:
+
+- it gets a url for captions for a given video ID
+- it downloads the captions from the url provided by the first method
+
 ## Downloading captions using official API
 
 ### Disclaimer: this method works only to download captions for a video that you own. Google API does not allow you to download captions for any other video's.
