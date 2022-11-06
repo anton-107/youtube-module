@@ -24,5 +24,9 @@
     "prettier": "^2.7.1",
     "ts-jest": "^29.0.3",
     "ts-mockito": "^2.6.1"
+  },
+  "dependencies": {
+    "@googleapis/oauth2": "^1.0.0",
+    "@googleapis/youtube": "^8.0.0"
   }
 }

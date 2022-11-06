@@ -30,6 +30,7 @@ describe("Youtube client", () => {
           callback(responseInstance);
         },
       },
+      oauthClient: instance(mock()),
       apiKey: "my-api-key",
     });
   });

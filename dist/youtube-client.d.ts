@@ -1,25 +1,26 @@
 /// <reference types="node" />
 /// <reference types="node" />
+/// <reference types="node" />
 import { IncomingMessage } from "http";
 import { RequestOptions } from "https";
+import { OAuth2Client } from "google-auth-library/build/src/auth/oauth2client";
 export declare type GetRequestCallback = (res: IncomingMessage) => void;
-declare type GetRequest = (
-  options: RequestOptions,
-  callback: GetRequestCallback
-) => void;
+declare type GetRequest = (options: RequestOptions, callback: GetRequestCallback) => void;
 interface YoutubeClientProperties {
-  httpClient: {
-    get: GetRequest;
-  };
-  apiKey: string;
+    httpClient: {
+        get: GetRequest;
+    };
+    oauthClient: OAuth2Client;
+    apiKey: string;
 }
 interface Caption {
-  kind: "youtube#caption";
-  id: string;
+    kind: "youtube#caption";
+    id: string;
 }
 export declare class YoutubeClient {
-  private properties;
-  constructor(properties: YoutubeClientProperties);
-  listCaptions(videoID: string): Promise<Caption[]>;
+    private properties;
+    constructor(properties: YoutubeClientProperties);
+    listCaptions(videoID: string): Promise<Caption[]>;
+    downloadCaption(captionID: string): Promise<Buffer>;
 }
 export {};

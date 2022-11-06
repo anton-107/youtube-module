@@ -1,5 +1,7 @@
 import { IncomingMessage } from "http";
 import { RequestOptions } from "https";
+import { youtube } from "@googleapis/youtube";
+import { OAuth2Client } from "google-auth-library/build/src/auth/oauth2client";
 
 export type GetRequestCallback = (res: IncomingMessage) => void;
 type GetRequest = (
@@ -27,28 +29,10 @@ async function getJsonResponse<T>(
     });
   });
 }
-// async function getBinaryResponse(getMethod: GetRequest, options): Promise<Buffer> {
-//   return new Promise((resolve) => {
-//     let data: Buffer[] = [];
-//     getMethod(options, (res) => {
-//       res.on("data", (chunk) => {
-//         data.push(chunk);
-//       });
-//       res.on("error", (error) => {
-//         console.log('request error', error);
-//       });
-//       res.on("end", () => {
-//         const response = Buffer.concat(data);
-//         console.log("response", res.statusCode);
-//         console.log("data", response);
-//         resolve(response);
-//       });
-//     });
-//   });
-// }
 
 interface YoutubeClientProperties {
   httpClient: { get: GetRequest };
+  oauthClient: OAuth2Client;
   apiKey: string;
 }
 
@@ -73,12 +57,26 @@ export class YoutubeClient {
     );
     return json.items;
   }
-  // public async downloadCaption(captionID: string): Promise<Buffer> {
-  //   console.log("Downloading caption with id: ", captionID);
-  //   const data = await getBinaryResponse(this.properties.httpClient.get, {
-  //     hostname: "www.googleapis.com",
-  //     path: `/youtube/v3/captions/${captionID}?tfmt=srt&key=${this.properties.apiKey}`,
-  //   });
-  //   return data;
-  // }
+  public async downloadCaption(captionID: string): Promise<Buffer> {
+    console.log("Downloading caption with id: ", captionID);
+    try {
+      const data = await youtube("v3").captions.download(
+        {
+          id: captionID,
+          auth: this.properties.oauthClient,
+        },
+        { responseType: "stream" }
+      );
+
+      const buffers = [];
+      // node.js readable streams implement the async iterator protocol
+      for await (const chunk of data.data) {
+        buffers.push(chunk);
+      }
+      return Buffer.concat(buffers);
+    } catch (err) {
+      console.error("Error downloading caption: ", err);
+      throw err;
+    }
+  }
 }
